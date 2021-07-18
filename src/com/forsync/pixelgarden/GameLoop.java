@@ -8,10 +8,17 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+
+public class GameLoop extends Application {
+
+    private ArrayList<Entity> entities;
 
     @Override
     public void start(Stage stage) {
+        entities = new ArrayList<>();
+
         stage.setTitle("Pixel Garden");
 
         Group root = new Group();
@@ -22,6 +29,7 @@ public class Main extends Application {
         root.getChildren().add(canvas);
 
         GraphicsContext g = canvas.getGraphicsContext2D();
+        g.setImageSmoothing(false);
 
         final long startingTime = System.nanoTime();
 
@@ -31,6 +39,13 @@ public class Main extends Application {
             public void handle(long currentTime) {
                 double t = currentTime - startingTime / 1000000000.0;
                 g.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+                for (Entity e : entities) {
+                    if (e != null) {
+                        g.drawImage(e.getSprite().getImage(),
+                                e.getX(), e.getY());
+                    }
+                }
             }
         }.start();
 
