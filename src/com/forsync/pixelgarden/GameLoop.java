@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class GameLoop extends Application {
 
     private ArrayList<Entity> entities;
-    public static final int WIDTH = 1280, HEIGHT = 720;
+    public static final int WIDTH = 1280, HEIGHT = 644;
 
     @Override
     public void start(Stage stage) {
@@ -25,7 +25,7 @@ public class GameLoop extends Application {
         Group root = new Group();
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        stage.setMaximized(true);
+//        stage.setMaximized(true);
         Canvas canvas = new Canvas(WIDTH, HEIGHT);
         root.getChildren().add(canvas);
 
@@ -33,12 +33,18 @@ public class GameLoop extends Application {
         g.setImageSmoothing(false);
 
         final long startingTime = System.nanoTime();
+        canvas.setOnMouseClicked(e -> {
+            for (Entity entity : entities) {
+                if (entity.getBounds().contains(e.getX(), e.getY())) {
+                    entity.OnClick();
+                }
+            }
+        });
 
         new AnimationTimer() {
 
             @Override
             public void handle(long currentTime) {
-                double t = currentTime - startingTime / 1000000000.0;
                 g.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
 
                 for (Entity e : entities) {

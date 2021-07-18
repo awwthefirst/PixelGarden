@@ -1,13 +1,14 @@
 package com.forsync.pixelgarden;
 
-import javafx.geometry.Point2D;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.shape.Rectangle;
 
-import javax.swing.text.Position;
 import java.io.FileNotFoundException;
 
 public class Entity {
     private double x, y;
-    private Sprite sprite;
+    protected int scaleX, scaleY;
+    protected final Sprite sprite;
 
     public Entity(String spriteName, int x, int y, int scaleX, int scaleY)
             throws FileNotFoundException {
@@ -15,10 +16,8 @@ public class Entity {
         this.sprite.setImage(spriteName, scaleX, scaleY);
         this.x = x;
         this.y = y;
-    }
-
-    public Entity(String spriteName, int x, int y) throws FileNotFoundException {
-        this(spriteName, x, y, 1, 1);
+        this.scaleX = scaleX;
+        this.scaleY = scaleY;
     }
 
     public Sprite getSprite() {
@@ -26,10 +25,26 @@ public class Entity {
     }
 
     public double getX() {
-        return x - (sprite.getImage().getWidth() / 2);
+        return x - (getWidth() / 2);
     }
 
     public double getY() {
-        return y - (sprite.getImage().getHeight() / 2);
+        return y - (getHeight() / 2);
+    }
+
+    public double getWidth() {
+        return sprite.getImage().getWidth();
+    }
+
+    public double getHeight() {
+        return sprite.getImage().getHeight();
+    }
+
+    public Rectangle getBounds() {
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
+    }
+
+    public void OnClick() {
+
     }
 }
