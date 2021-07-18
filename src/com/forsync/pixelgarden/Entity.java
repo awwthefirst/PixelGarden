@@ -6,7 +6,7 @@ import javax.swing.text.Position;
 import java.io.FileNotFoundException;
 
 public class Entity {
-    private int x, y;
+    private double x, y;
     private Sprite sprite;
 
     public Entity(String spriteName, int x, int y, int scaleX, int scaleY)
@@ -25,11 +25,11 @@ public class Entity {
         return sprite;
     }
 
-    public int getX() {
-        return x;
+    public double getX() {
+        return x - (sprite.getImage().getWidth() / 2);
     }
 
-    public int getY() {
-        return y;
+    public double getY() {
+        return y - (sprite.getImage().getHeight() / 2);
     }
 }
